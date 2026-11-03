@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Search, Building2, Utensils, Compass, Star, MapPin, Calendar, Users, Filter, CheckCircle2, ShieldCheck, Clock } from 'lucide-react';
+import { Search, Building2, Utensils, Compass, Star, MapPin, Calendar, Users, Filter, CheckCircle2, ShieldCheck, Clock, Layers } from 'lucide-react';
 
 function ReservarContent() {
   const searchParams = useSearchParams();
@@ -36,7 +36,15 @@ function ReservarContent() {
     ]
   };
 
-  const currentList = mockItems[category] || mockItems.hotels;
+  const currentList = category === 'all'
+    ? Object.entries(mockItems).flatMap(([itemCategory, items]) => items.map((item) => ({ ...item, category: itemCategory })))
+    : (mockItems[category] || mockItems.hotels).map((item) => ({ ...item, category }));
+  const categoryTitle = {
+    all: 'Todo',
+    hotels: 'Alojamientos',
+    restaurants: 'Servicios',
+    experiences: 'Experiencias',
+  }[category] || 'Alojamientos';
 
   const handleConfirmBooking = (e) => {
     e.preventDefault();
@@ -49,7 +57,7 @@ function ReservarContent() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
         <div>
           <h1 className="text-2xl font-black text-slate-900">
-            {category === 'hotels' ? 'Hoteles y Alojamientos' : category === 'restaurants' ? 'Mesas en Restaurantes' : 'Experiencias y Spas'}
+            {categoryTitle}
           </h1>
           <p className="text-sm text-slate-500">Selecciona tu opción favorita para consultar disponibilidad y reservar</p>
         </div>
@@ -57,12 +65,18 @@ function ReservarContent() {
         {/* Category switcher pills */}
         <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
           <button
+            onClick={() => { setCategory('all'); setSelectedItem(null); setBookingConfirmed(false); }}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${category === 'all' ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+          >
+            <Layers className="w-4 h-4" /> Todo
+          </button>
+          <button
             onClick={() => { setCategory('hotels'); setSelectedItem(null); setBookingConfirmed(false); }}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
               category === 'hotels' ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            <Building2 className="w-4 h-4" /> Hoteles
+            <Building2 className="w-4 h-4" /> Alojamientos
           </button>
           <button
             onClick={() => { setCategory('restaurants'); setSelectedItem(null); setBookingConfirmed(false); }}
@@ -70,7 +84,7 @@ function ReservarContent() {
               category === 'restaurants' ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            <Utensils className="w-4 h-4" /> Restaurantes
+            <Utensils className="w-4 h-4" /> Servicios
           </button>
           <button
             onClick={() => { setCategory('experiences'); setSelectedItem(null); setBookingConfirmed(false); }}
@@ -106,7 +120,7 @@ function ReservarContent() {
                   <span className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">
                     {item.tag}
                   </span>
-                  {category === 'hotels' ? <Building2 className="w-12 h-12 text-blue-400" /> : category === 'restaurants' ? <Utensils className="w-12 h-12 text-amber-400" /> : <Compass className="w-12 h-12 text-emerald-400" />}
+                  {item.category === 'hotels' ? <Building2 className="w-12 h-12 text-blue-400" /> : item.category === 'restaurants' ? <Utensils className="w-12 h-12 text-amber-400" /> : <Compass className="w-12 h-12 text-emerald-400" />}
                 </div>
 
                 <div className="flex-1 flex flex-col justify-between space-y-3">
@@ -185,7 +199,7 @@ function ReservarContent() {
 
                     <div>
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">
-                        {category === 'hotels' ? 'Número de noches / Huéspedes' : 'Hora y comensales'}
+                        {selectedItem.category === 'hotels' ? 'Número de noches / Huéspedes' : selectedItem.category === 'restaurants' ? 'Hora y comensales' : 'Horario y personas'}
                       </label>
                       <div className="grid grid-cols-2 gap-2">
                         <select className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">

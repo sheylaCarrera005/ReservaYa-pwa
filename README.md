@@ -1,29 +1,46 @@
 # ReservaYa
 
-ReservaYa is a Spanish-language web prototype for discovering hotels, restaurants, and experiences and simulating a reservation. It uses Next.js App Router, React, Tailwind CSS, and lucide-react.
+ReservaYa es un prototipo web para descubrir hoteles, restaurantes y experiencias, y simular una reserva. Utiliza Next.js App Router, React, Tailwind CSS y lucide-react.
 
-## Run locally
+Creado por:
+- Emanuel Ovando 
+- Javier Montero 
+- Sheila López 
+- Raúl de la Cruz
 
-Requirements: Node.js and npm.
+
+## Ejecutar localmente
+
+Requisitos: Node.js y npm.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Production commands are `npm run build` and `npm start`.
+Abre [http://localhost:3000](http://localhost:3000). Los comandos para producción son `npm run build` y `npm start`.
 
-## Current scope
+## Probar la demo
 
-- `/` provides category discovery and a search form.
-- `/reservar` displays sample listings and a local-only simulated confirmation.
-- Supabase email/password registration and sign-in are available at `/auth/register` and `/auth/signin` when configured. There is still no real availability, payment, or reservation persistence.
-- The manifest exists, but the referenced icon files, service worker, and offline behavior are not implemented. Do not describe the current application as offline-capable or fully installable.
+Para probar la demo con la autenticación de Supabase, instala la biblioteca con:
 
-## Supabase authentication setup
+```bash
+npm install @supabase/supabase-js
+```
 
-Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `NEXT_PUBLIC_SITE_URL` from your Supabase project and local/deployed app URL. Enable Email authentication in Supabase Auth and add `http://localhost:3000/auth/callback` (and the deployed equivalent) to its allowed redirect URLs. If email confirmation is enabled, users must confirm their address; if disabled, registration signs them in immediately. Restart the development server after changing environment variables.
+También puedes comprobar que el proyecto compile ejecutando:
 
-## Project guidance
+```bash
+npm run build
+```
 
-See [AGENTS.md](AGENTS.md) for contribution and architecture guidance, [DESIGN.md](DESIGN.md) for the design proposal, and [docs/TECHNICAL-AUDIT.md](docs/TECHNICAL-AUDIT.md) for the repository audit that informed this structure.
+## Alcance actual
+
+- `/` ofrece el descubrimiento de categorías y un formulario de búsqueda.
+- `/reservar` muestra listados de ejemplo y una confirmación simulada que solo se procesa localmente.
+- El registro y el inicio de sesión con correo electrónico y contraseña de Supabase están disponibles en `/auth/register` y `/auth/signin` cuando se configuran. Todavía no existen disponibilidad real, pagos ni persistencia de reservas.
+- El manifiesto existe, pero los archivos de iconos referenciados, el service worker y el comportamiento sin conexión no están implementados. No describas la aplicación actual como compatible con el uso sin conexión ni como completamente instalable.
+
+## Configuración de la autenticación de Supabase
+
+Copia `.env.example` como `.env.local` y define `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` y `NEXT_PUBLIC_SITE_URL` con los valores de tu proyecto de Supabase y la URL de la aplicación local o desplegada. Activa la autenticación por correo electrónico en Supabase Auth y agrega `http://localhost:3000/auth/callback` (y su equivalente desplegado) a las URL de redirección permitidas. Si la confirmación por correo está activada, los usuarios deben confirmar su dirección; si está desactivada, el registro inicia la sesión inmediatamente. Reinicia el servidor de desarrollo después de cambiar las variables de entorno.

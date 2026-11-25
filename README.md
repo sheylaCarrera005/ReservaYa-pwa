@@ -37,7 +37,7 @@ npm run build
 ## Alcance actual
 
 - `/` ofrece el descubrimiento de categorías y un formulario de búsqueda.
-- `/reservar` muestra listados de ejemplo y una confirmación simulada que solo se procesa localmente.
+- `/reservar` muestra el catálogo real de Supabase, con filtros por categoría y destino. La confirmación continúa siendo una simulación local.
 - El registro y el inicio de sesión con correo electrónico y contraseña de Supabase están disponibles en `/auth/register` y `/auth/signin` cuando se configuran. Todavía no existen disponibilidad real, pagos ni persistencia de reservas.
 - El manifiesto existe, pero los archivos de iconos referenciados, el service worker y el comportamiento sin conexión no están implementados. No describas la aplicación actual como compatible con el uso sin conexión ni como completamente instalable.
 

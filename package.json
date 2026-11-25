@@ -6,20 +6,28 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test:db": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON --test supabase/tests/*.test.js",
+    "db:seed:demo": "supabase db query --remote --file supabase/seeds/demo_visualization.sql",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:lint": "supabase db lint",
+    "db:advisors": "supabase db advisors"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
     "lucide-react": "^1.16.0",
-    "next": "^15.1.0",
+    "next": "^15.5.29",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.6.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "supabase": "^3.0.0",
+    "supabase": "3.4.0",
     "tailwindcss": "^3.4.17"
   },
   "repository": {

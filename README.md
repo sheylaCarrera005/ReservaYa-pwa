@@ -41,6 +41,18 @@ npm run build
 - El registro y el inicio de sesión con correo electrónico y contraseña de Supabase están disponibles en `/auth/register` y `/auth/signin` cuando se configuran. Todavía no existen disponibilidad real, pagos ni persistencia de reservas.
 - El manifiesto existe, pero los archivos de iconos referenciados, el service worker y el comportamiento sin conexión no están implementados. No describas la aplicación actual como compatible con el uso sin conexión ni como completamente instalable.
 
+## Base de datos de Supabase
+
+El esquema preparado incluye perfiles, establecimientos, elementos reservables, horarios, reservas, reseñas y favoritos, con políticas RLS y datos de ejemplo de la interfaz. Las migraciones están en `supabase/migrations/` y el catálogo demo en `supabase/seed.sql`.
+
+El esquema y el catálogo demo están aplicados y verificados en el proyecto remoto **ReservaYa** (`nbvghzxueilmjkwbbwng`). La migración local y el historial remoto están sincronizados. Para reproducir el esquema en otro proyecto, consulta [supabase/README.md](supabase/README.md) y comprueba siempre el proyecto enlazado antes de modificar una base con datos.
+
+```bash
+npm run test:db
+```
+
+Las pruebas de esquema, precios y permisos se ejecutan con PostgreSQL en WASM; no requieren Docker ni credenciales. La interfaz continúa usando sus datos de ejemplo hasta que se conecte explícitamente al nuevo catálogo. La disponibilidad transaccional y los pagos no están implementados.
+
 ## Configuración de la autenticación de Supabase
 
 Copia `.env.example` como `.env.local` y define `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` y `NEXT_PUBLIC_SITE_URL` con los valores de tu proyecto de Supabase y la URL de la aplicación local o desplegada. Activa la autenticación por correo electrónico en Supabase Auth y agrega `http://localhost:3000/auth/callback` (y su equivalente desplegado) a las URL de redirección permitidas. Si la confirmación por correo está activada, los usuarios deben confirmar su dirección; si está desactivada, el registro inicia la sesión inmediatamente. Reinicia el servidor de desarrollo después de cambiar las variables de entorno.
